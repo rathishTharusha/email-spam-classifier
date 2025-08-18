@@ -1,0 +1,48 @@
+# Python/ML specifics
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+dist/
+build/
+*.so
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# ML data and models (ignore large files; remove lines if you want to upload small ones)
+data/
+datasets/
+models/
+*.h5  # Keras/TF models
+*.pth  # PyTorch models
+*.pb  # TensorFlow saved models
+*.ckpt
+*.tflite
+*.mlmodel
+
+# Logs and caches
+logs/
+*.log
+*.cache
+tmp/
+temp/
+
+# OS-specific files
+.DS_Store  # Mac
+Thumbs.db  # Windows
+
+# Other common ignores
+.idea/  # PyCharm
+.vscode/  # VS Code
+*.swp
+*.swo
