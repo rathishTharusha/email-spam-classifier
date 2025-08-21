@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project develops a high-accuracy email spam classifier using Natural Language Processing (NLP) and machine learning. It uses a Support Vector Machine (SVM) model with TF-IDF features, optimized via GridSearchCV, achieving ~98-99% accuracy on the test set. The project addresses class imbalance with SMOTE, includes comprehensive preprocessing, and provides a Jupyter Notebook for exploration and a planned Streamlit web app for real-time predictions. Designed as a learning tool, it’s ideal for understanding NLP, machine learning pipelines, and model evaluation.
+This project develops a high-accuracy email spam classifier using Natural Language Processing (NLP) and machine learning. It employs a Support Vector Machine (SVM) model with TF-IDF features, optimized via GridSearchCV, achieving ~98-99% accuracy on the test set. The project addresses class imbalance using SMOTE, includes comprehensive text preprocessing, and is documented in a Jupyter Notebook and Python script for exploration. A Streamlit web app for real-time predictions is planned. Designed as a learning tool, it’s ideal for mastering NLP, machine learning pipelines, and model evaluation.
 
 ### Key Features
 
@@ -11,7 +11,7 @@ This project develops a high-accuracy email spam classifier using Natural Langua
 - **Model**: SVM classifier with TF-IDF vectorization, tuned with GridSearchCV for optimal hyperparameters (C, kernel, gamma, max_features, ngram_range).
 - **Class Imbalance**: Handled using SMOTE to oversample the minority class (spam).
 - **Evaluation**: Metrics include accuracy, precision, recall, F1-score (~98%+), and a confusion matrix visualization.
-- **Web App**: A planned Streamlit interface for users to input email text and get spam/ham predictions.
+- **Web App**: Planned Streamlit interface for users to input email text and get spam/ham predictions (to be implemented in `app.py`).
 - **Future Work**: Explore deep learning models (e.g., LSTM, BERT) for potentially higher accuracy (99%+).
 
 ### Deliverables
@@ -21,14 +21,14 @@ This project develops a high-accuracy email spam classifier using Natural Langua
 - Saved Models: `spam_classifier_model.joblib` (SVM model) and `tfidf_vectorizer.joblib` (TF-IDF vectorizer).
 - Visualizations: Confusion matrix plot (`cm.png`).
 - Web App: `app.py` (Streamlit script, to be added).
-- Environment file: `environment.yml` for reproducible setup.
+- Environment File: `environment.yml` for reproducible setup.
 - This README.
 
 ## Prerequisites
 
 - Python 3.9 (recommended for compatibility).
 - Conda (Miniconda preferred) for environment management.
-- Dataset: `emails.csv` from Kaggle.
+- Dataset: `emails.csv` from [Kaggle Spam Email Dataset](https://www.kaggle.com/datasets/jackksoncsie/spam-email-dataset).
 - GitHub account to clone the repository.
 
 ## Setup Instructions
@@ -36,13 +36,13 @@ This project develops a high-accuracy email spam classifier using Natural Langua
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/your-username/email-spam-classifier.git
+   git clone https://github.com/rathishTharusha/email-spam-classifier.git
    cd email-spam-classifier
    ```
 
 2. **Set Up Conda Environment**:
 
-   - Install Miniconda if not already installed.
+   - Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html) if not already installed.
    - Create and activate the environment:
 
      ```bash
@@ -56,12 +56,12 @@ This project develops a high-accuracy email spam classifier using Natural Langua
      conda create -n spam_detector python=3.9
      conda activate spam_detector
      conda install pandas matplotlib scikit-learn nltk jupyter imbalanced-learn
-     pip install streamlit  # For web app
+     pip install streamlit  # For future web app
      ```
 
 3. **Download the Dataset**:
 
-   - Download `emails.csv` from the Kaggle dataset page.
+   - Download `emails.csv` from [Kaggle](https://www.kaggle.com/datasets/jackksoncsie/spam-email-dataset).
    - Place it in the project root folder (same level as `spam_classifier_model.ipynb`).
 
 4. **Verify Setup**:
@@ -100,12 +100,12 @@ This project develops a high-accuracy email spam classifier using Natural Langua
    python spam_classifier_model.py
    ```
 
-   - Outputs similar results to the notebook.
+   - Outputs similar results to the notebook, including metrics and saved files.
 
 ### Running the Web App (Planned)
 
 1. Ensure the environment is active (`conda activate spam_detector`).
-2. Run the Streamlit app (once `app.py` is added):
+2. Once `app.py` is implemented, run:
 
    ```bash
    streamlit run app.py
@@ -123,21 +123,21 @@ This project develops a high-accuracy email spam classifier using Natural Langua
   - Model performance: ~98-99% accuracy, precision, recall, F1-score (check notebook output).
   - Confusion matrix plot: Saved as `cm.png`.
   - Sample prediction: "Win a free iPhone now!" → Spam.
-- **Web App**: Displays "Spam" or "Ham" (to be implemented).
+- **Web App**: Will display "Spam" or "Ham" (to be implemented).
 
 ## Project Structure
 
 ```
 email-spam-classifier/
-├── emails.csv              # Dataset (download from Kaggle)
+├── emails.csv                   # Dataset (download from Kaggle)
 ├── spam_classifier_model.ipynb  # Jupyter Notebook
 ├── spam_classifier_model.py     # Python script
 ├── spam_classifier_model.joblib # Saved SVM model
 ├── tfidf_vectorizer.joblib     # Saved TF-IDF vectorizer
-├── cm.png                  # Confusion matrix plot
-├── app.py                  # Streamlit app (to be added)
-├── environment.yml         # Conda environment file
-└── README.md               # This file
+├── cm.png                      # Confusion matrix plot
+├── app.py                      # Streamlit app (to be added)
+├── environment.yml             # Conda environment file
+└── README.md                   # This file
 ```
 
 ## Contributing
@@ -151,10 +151,10 @@ Contributions are welcome! To contribute:
 5. Open a pull request.
 
 Ideas for contributions:
-- Add deep learning models (e.g., LSTM, BERT).
-- Enhance the Streamlit app with confidence scores or batch processing.
-- Improve preprocessing (e.g., use word embeddings like Word2Vec).
-- Add more visualizations (e.g., ROC curve).
+- Implement the Streamlit app (`app.py`) with confidence scores or batch processing.
+- Add deep learning models (e.g., LSTM, BERT) for higher accuracy.
+- Enhance preprocessing with word embeddings (e.g., Word2Vec, GloVe).
+- Add visualizations like ROC curves or word clouds.
 
 Please follow the code style in `spam_classifier_model.py` and include tests for new features.
 
@@ -162,15 +162,16 @@ Please follow the code style in `spam_classifier_model.py` and include tests for
 
 - **Advanced Models**: Experiment with Random Forest, XGBoost, or BERT for 99%+ accuracy.
 - **Preprocessing**: Use word embeddings (e.g., GloVe, BERT embeddings) for richer text representation.
-- **Web App**: Add features like prediction confidence or email header analysis.
+- **Web App**: Implement `app.py` with features like prediction confidence or email header analysis.
 - **Deployment**: Host on Heroku or Streamlit Community Cloud for public access.
 
 ## Acknowledgments
 
-- **Dataset**: Spam Email Dataset.
+- **Dataset**: [Spam Email Dataset](https://www.kaggle.com/datasets/jackksoncsie/spam-email-dataset).
 - **Libraries**: pandas, scikit-learn, NLTK, matplotlib, imbalanced-learn, Streamlit.
+- **Author**: Rathish Tharusha (GitHub: [rathishTharusha](https://github.com/rathishTharusha)).
 - **Purpose**: Built as a learning project to master NLP and machine learning.
 
 ## Contact
 
-For questions, open a GitHub issue or email [your-email@example.com].
+For questions, open a GitHub issue or contact [Rathish Tharusha](https://github.com/rathishTharusha).
