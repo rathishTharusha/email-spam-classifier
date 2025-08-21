@@ -2,37 +2,36 @@
 
 ## Project Overview
 
-This project builds an email spam classifier using Natural Language Processing (NLP) techniques to distinguish spam emails from non-spam (ham). It achieves high accuracy (\~98-99%) using a Multinomial Naive Bayes model with TF-IDF features, with plans to explore advanced models like BERT for potentially higher accuracy (99%+). The project includes a Jupyter Notebook for data processing, model training, and evaluation, plus a Streamlit web app for real-time spam detection. It’s designed as a learning tool for understanding NLP and machine learning, with clear documentation for reproducibility.
+This project develops a high-accuracy email spam classifier using Natural Language Processing (NLP) and machine learning. It uses a Support Vector Machine (SVM) model with TF-IDF features, optimized via GridSearchCV, achieving ~98-99% accuracy on the test set. The project addresses class imbalance with SMOTE, includes comprehensive preprocessing, and provides a Jupyter Notebook for exploration and a planned Streamlit web app for real-time predictions. Designed as a learning tool, it’s ideal for understanding NLP, machine learning pipelines, and model evaluation.
 
 ### Key Features
 
-- **Dataset**: Uses the Spam Email Dataset (\~5,728 emails, \~76% ham, \~24% spam).
-- **Preprocessing**: Text cleaning with NLTK (tokenization, stemming, stopword removal).
-- **Model**: Multinomial Naive Bayes with TF-IDF vectorization; achieves \~98% accuracy, precision, recall, and F1-score on test data.
-- **Evaluation**: Includes confusion matrix visualization and metrics (accuracy, precision, recall, F1-score).
-- **Web App**: A Streamlit interface where users input email text to get spam/ham predictions.
-- **Future Work**: Option to integrate advanced models like LSTM or BERT for higher accuracy.
+- **Dataset**: Spam Email Dataset (~5,728 emails, ~76% ham, ~24% spam) from Kaggle.
+- **Preprocessing**: Text cleaning with NLTK (lowercase, punctuation removal, tokenization, stopword removal, lemmatization).
+- **Model**: SVM classifier with TF-IDF vectorization, tuned with GridSearchCV for optimal hyperparameters (C, kernel, gamma, max_features, ngram_range).
+- **Class Imbalance**: Handled using SMOTE to oversample the minority class (spam).
+- **Evaluation**: Metrics include accuracy, precision, recall, F1-score (~98%+), and a confusion matrix visualization.
+- **Web App**: A planned Streamlit interface for users to input email text and get spam/ham predictions.
+- **Future Work**: Explore deep learning models (e.g., LSTM, BERT) for potentially higher accuracy (99%+).
 
 ### Deliverables
 
-- Jupyter Notebook: `spam_classifier_model.ipynb` (data loading, preprocessing, modeling, visualization).
-- Saved Models: `spam_classifier_model.joblib` (Naive Bayes) and `tfidf_vectorizer.joblib` (TF-IDF vectorizer).
+- Jupyter Notebook: `spam_classifier_model.ipynb` (data loading, preprocessing, modeling, evaluation, visualization).
+- Python Script: `spam_classifier_model.py` (equivalent to notebook, for automation).
+- Saved Models: `spam_classifier_model.joblib` (SVM model) and `tfidf_vectorizer.joblib` (TF-IDF vectorizer).
 - Visualizations: Confusion matrix plot (`cm.png`).
-- Web App: `app.py` (Streamlit script for interactive predictions).
-- This README and environment setup file (`environment.yml`).
+- Web App: `app.py` (Streamlit script, to be added).
+- Environment file: `environment.yml` for reproducible setup.
+- This README.
 
 ## Prerequisites
 
-To run this project, you need:
-
 - Python 3.9 (recommended for compatibility).
 - Conda (Miniconda preferred) for environment management.
-- The dataset (`emails.csv`) from Kaggle.
-- A GitHub account to clone the repository.
+- Dataset: `emails.csv` from Kaggle.
+- GitHub account to clone the repository.
 
 ## Setup Instructions
-
-Follow these steps to set up the project locally.
 
 1. **Clone the Repository**:
 
@@ -50,27 +49,34 @@ Follow these steps to set up the project locally.
      conda env create -f environment.yml
      conda activate spam_detector
      ```
-   - Alternatively, manually create the environment:
+
+   - Or manually create:
 
      ```bash
      conda create -n spam_detector python=3.9
      conda activate spam_detector
-     conda install pandas matplotlib scikit-learn nltk jupyter streamlit
+     conda install pandas matplotlib scikit-learn nltk jupyter imbalanced-learn
+     pip install streamlit  # For web app
      ```
 
 3. **Download the Dataset**:
 
-   - Go to the Kaggle dataset page, sign in, and download `emails.csv`.
-   - Place `emails.csv` in the project root folder (same level as `spam_classifier_model.ipynb`).
+   - Download `emails.csv` from the Kaggle dataset page.
+   - Place it in the project root folder (same level as `spam_classifier_model.ipynb`).
 
 4. **Verify Setup**:
 
-   - Run `python -c "import pandas, matplotlib, sklearn, nltk, streamlit; print('All good!')"` to check library installations.
+   - Check library installations:
+
+     ```bash
+     python -c "import pandas, matplotlib, sklearn, nltk, imblearn, streamlit; print('All good!')"
+     ```
+
    - If errors occur, install missing libraries with `conda install <library>` or `pip install <library>`.
 
 ## Usage
 
-### Running the Jupyter Notebook
+### Running the Jupyter Notebook or Python Script
 
 1. Start Jupyter Notebook:
 
@@ -78,48 +84,93 @@ Follow these steps to set up the project locally.
    cd path/to/project
    jupyter notebook
    ```
-2. Open `spam_classifier_model.ipynb` in the browser.
-3. Run all cells (Shift+Enter) to:
-   - Load and preprocess the dataset.
-   - Train the Naive Bayes model.
-   - Evaluate performance (accuracy, precision, recall, F1-score).
-   - Generate a confusion matrix plot (`cm.png`).
-   - Save the model and vectorizer (`spam_classifier_model.joblib`, `tfidf_vectorizer.joblib`).
-4. Test a sample email (e.g., "Win a free iPhone now!") to see a prediction.
 
-### Running the Web App
+2. Open `spam_classifier_model.ipynb` and run all cells (Shift+Enter) to:
+   - Load and preprocess `emails.csv`.
+   - Apply SMOTE to balance classes.
+   - Train an SVM model with TF-IDF features using a Pipeline and GridSearchCV.
+   - Evaluate on test set (accuracy, precision, recall, F1-score).
+   - Visualize confusion matrix (saved as `cm.png`).
+   - Save model and vectorizer (`spam_classifier_model.joblib`, `tfidf_vectorizer.joblib`).
+   - Test a sample email (e.g., "Win a free iPhone now!" → Spam).
+
+3. Alternatively, run the Python script:
+
+   ```bash
+   python spam_classifier_model.py
+   ```
+
+   - Outputs similar results to the notebook.
+
+### Running the Web App (Planned)
 
 1. Ensure the environment is active (`conda activate spam_detector`).
-2. Run the Streamlit app:
+2. Run the Streamlit app (once `app.py` is added):
 
    ```bash
    streamlit run app.py
    ```
-3. Open the provided URL (e.g., `http://localhost:8501`) in your browser.
-4. Enter an email text in the text area and click "Predict" to see if it’s spam or ham.
+
+3. Open the URL (e.g., `http://localhost:8501`) in your browser.
+4. Enter email text and click "Predict" to see if it’s spam or ham.
 
 ### Expected Outputs
 
-- **Notebook**:
-  - Dataset stats: \~5,728 rows, 2 columns (`text`, `spam`).
-  - Class distribution: \~4,360 ham (0), \~1,368 spam (1).
-  - Model performance: \~98% accuracy, precision, recall, F1-score.
-  - Confusion matrix plot saved as `cm.png`.
-- **Web App**: Displays "Spam" or "Ham" based on input text.
+- **Notebook/Script**:
+  - Dataset: ~5,728 rows, columns (`text`, `spam`).
+  - Class distribution: ~4,360 ham (0), ~1,368 spam (1).
+  - Post-SMOTE: Balanced classes (~3,504 each).
+  - Model performance: ~98-99% accuracy, precision, recall, F1-score (check notebook output).
+  - Confusion matrix plot: Saved as `cm.png`.
+  - Sample prediction: "Win a free iPhone now!" → Spam.
+- **Web App**: Displays "Spam" or "Ham" (to be implemented).
+
+## Project Structure
+
+```
+email-spam-classifier/
+├── emails.csv              # Dataset (download from Kaggle)
+├── spam_classifier_model.ipynb  # Jupyter Notebook
+├── spam_classifier_model.py     # Python script
+├── spam_classifier_model.joblib # Saved SVM model
+├── tfidf_vectorizer.joblib     # Saved TF-IDF vectorizer
+├── cm.png                  # Confusion matrix plot
+├── app.py                  # Streamlit app (to be added)
+├── environment.yml         # Conda environment file
+└── README.md               # This file
+```
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a branch (`git checkout -b feature/your-feature`).
+3. Commit changes (`git commit -m "Add your feature"`).
+4. Push to the branch (`git push origin feature/your-feature`).
+5. Open a pull request.
+
+Ideas for contributions:
+- Add deep learning models (e.g., LSTM, BERT).
+- Enhance the Streamlit app with confidence scores or batch processing.
+- Improve preprocessing (e.g., use word embeddings like Word2Vec).
+- Add more visualizations (e.g., ROC curve).
+
+Please follow the code style in `spam_classifier_model.py` and include tests for new features.
 
 ## Future Improvements
 
-- **Model Upgrades**: Experiment with SVM, Random Forest, or BERT for higher accuracy (target 99%+).
-- **Preprocessing**: Use lemmatization or word embeddings (e.g., Word2Vec, GloVe) for better text representation.
-- **Web App**: Add features like confidence scores or batch email processing.
-- **Deployment**: Host on Heroku or Streamlit Sharing for public access.
+- **Advanced Models**: Experiment with Random Forest, XGBoost, or BERT for 99%+ accuracy.
+- **Preprocessing**: Use word embeddings (e.g., GloVe, BERT embeddings) for richer text representation.
+- **Web App**: Add features like prediction confidence or email header analysis.
+- **Deployment**: Host on Heroku or Streamlit Community Cloud for public access.
 
 ## Acknowledgments
 
-- Dataset: Spam Email Dataset.
-- Libraries: pandas, scikit-learn, NLTK, matplotlib, Streamlit.
-- Built as part of a learning project to master NLP and machine learning.
+- **Dataset**: Spam Email Dataset.
+- **Libraries**: pandas, scikit-learn, NLTK, matplotlib, imbalanced-learn, Streamlit.
+- **Purpose**: Built as a learning project to master NLP and machine learning.
 
 ## Contact
 
-For questions or issues, open a GitHub issue or contact \[your-email@example.com\].
+For questions, open a GitHub issue or email [your-email@example.com].

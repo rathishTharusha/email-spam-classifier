@@ -24,7 +24,7 @@ nltk.download('stopwords')
 # %%
 # Step 1: Load and preprocess the dataset
 # Load the CSV file (adjust the path to your local file)
-data = pd.read_csv('data/emails.csv')
+data = pd.read_csv('emails.csv')
 
 # %%
 # Set plot style for better visuals

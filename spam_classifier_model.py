@@ -27,7 +27,7 @@ nltk.download('wordnet', quiet=True)
 
 # %%
 # Step 1: Load the dataset
-data = pd.read_csv('data/emails.csv')
+data = pd.read_csv('emails.csv')
 
 # Explore the dataset
 print("Column Headers:", data.columns.tolist())
