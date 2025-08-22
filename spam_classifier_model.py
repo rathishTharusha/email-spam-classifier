@@ -61,7 +61,7 @@ def preprocess_text(text):
 data['processed_text'] = data['text'].apply(preprocess_text)
 
 # %%
-# Split dataset
+# Split dataset (80/20)
 X = data['processed_text']
 y = data['spam']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -81,12 +81,12 @@ pipeline = Pipeline([
 # %%
 # GridSearchCV with class_weight options
 param_grid = {
-    'tfidf__max_features': [3000, 5000],  # Reduced for speed
+    'tfidf__max_features': [3000, 5000],
     'tfidf__ngram_range': [(1,1), (1,2)],
     'svm__C': [0.1, 1, 10],
     'svm__kernel': ['linear', 'rbf'],
     'svm__gamma': ['scale', 'auto'],
-    'svm__class_weight': ['balanced', {0: 1, 1: 2}, {0: 1, 1: 3}]  # Test custom weights
+    'svm__class_weight': ['balanced', {0: 1, 1: 2}, {0: 1, 1: 3}]
 }
 try:
     grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring='accuracy', n_jobs=-1, verbose=2)
@@ -117,6 +117,27 @@ print(f"Accuracy: {test_accuracy:.4f}")
 print(f"Precision: {test_precision:.4f}")
 print(f"Recall: {test_recall:.4f}")
 print(f"F1-Score: {test_f1:.4f}")
+
+# %%
+# Visualize test metrics with value labels
+metrics = {
+    'Accuracy': test_accuracy,
+    'Precision': test_precision,
+    'Recall': test_recall,
+    'F1 Score': test_f1
+}
+
+plt.figure(figsize=(6, 4))
+ax = sns.barplot(x=list(metrics.keys()), y=list(metrics.values()), palette='viridis')
+plt.ylim(0.9, 1.05)
+plt.title('Test Set Metrics')
+plt.ylabel('Score')
+
+# Annotate bars with metric values
+for i, v in enumerate(metrics.values()):
+    ax.text(i, v + 0.01, f"{v:.3f}", ha='center', va='bottom', fontweight='bold')
+
+plt.show()
 
 # %%
 # Confusion matrix
